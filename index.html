@@ -61,30 +61,30 @@
 
   function joinRoom() {
     console.log("joinRoom function called");
-    // Show the join room form and hide the other elements
+    
     document.getElementById("join-room").style.display = "block";
     document.getElementById("game").style.display = "none";
     document.getElementById("create-room").style.display = "none";
   }
 
   function createRoom() {
-    // Show the create room form and hide the other elements
+    
     document.getElementById("create-room").style.display = "block";
     document.getElementById("game").style.display = "none";
     document.getElementById("join-room").style.display = "none";
   }
 
   function saveRoom() {
-    // Get the number of players and the questions and challenges from the form
+    
     var numPlayers = document.getElementById("players-number").value;
     truths = document.getElementById("truths").value.split(".");
     challenges = document.getElementById("challenges").value.split(".");
     roomCode = generateRoomCode();
     document.getElementById("room-code-display").innerHTML = roomCode;
-    // Show the game room and hide the create room form
+    
     document.getElementById("game-room").style.display = "block";
     document.getElementById("create-room").style.display = "none";
-    // Add the players to the player list
+    
     for (var i = 0; i < numPlayers; i++) {
       players.push("Jugador " + (i + 1));
       document.getElementById("player-list").innerHTML += "Jugador " + (i + 1) + "<br>";
@@ -92,21 +92,21 @@
   }
 
   function spinBottle() {
-    // Spin the bottle and select a random player
+    
     currentPlayer = players[Math.floor(Math.random() * players.length)];
     document.getElementById("question").innerHTML = currentPlayer + ", ¿verdad o reto?";
-    // Show the truth or dare overlay
+    
     document.getElementById("game-overlay").style.display = "block";
   }
 
   function truth() {
-    // Select a random truth from the truth array
+    
     var truth = truths[Math.floor(Math.random() * truths.length)];
     document.getElementById("question").innerHTML = currentPlayer + ", " + truth;
   }
 
   function dare() {
-    // Select a random dare from the dare array
+   
     var dare = challenges[Math.floor(Math.random() * challenges.length)];
     document.getElementById("question").innerHTML = currentPlayer + ", " + dare;
   }
@@ -114,7 +114,7 @@
   function generateRoomCode()
 
 {
-// Generate a random room code using letters and numbers
+
 var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 var code = "";
 for (var i = 0; i < 5; i++) {
@@ -122,12 +122,12 @@ code += possible.charAt(Math.floor(Math.random() * possible.length));
 }
 return code;
 }
-// Fuction to check if room is full or not
+
 function joinRoom() {
 var enteredCode = document.getElementById("room-code").value;
 if (enteredCode === roomCode && players.length < 8 ) {
 alert("Successfully joined room");
-// Do something to add player to the room
+
 }
 else if(players.length >= 8 ){
 alert("Sala Llena")
