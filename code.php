@@ -53,5 +53,6 @@
         echo "Error al guardar las preguntas y los retos: " . $conn->error;
     }
 
+
     $conn->close();
 ?>
