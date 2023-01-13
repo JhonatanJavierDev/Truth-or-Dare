@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta>
+  <title>Juego de Verdad o Reto</title>
+</head>
+<body>
+  <div id="game">
+    <h1>Bienvenido al Juego de Verdad o Reto</h1>
+    <button onclick="joinRoom()">Unirse a sala</button>
+    <button onclick="createRoom()">Crear sala</button>
+  </div>
+  <div id="create-room" style="display: none;">
+    <h2>Configuración de sala</h2>
+    <form action="code.php" method="post">
+      <label for="players-number">Cantidad de jugadores:</label>
+      <select id="players-number">
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+      </select>
+      <br>
+      <label for="truths">Ingresa las preguntas para el Verdad:</label>
+      <textarea id="truths" name="truths"></textarea>
+      <br>
+      <label for="challenges">Ingresa los retos:</label>
+      <textarea id="challenges" name="challenges"></textarea>
+      <br>
+      <button onclick="saveRoom()">Crear sala</button>
+    </form>
+  </div>
+  <div id="join-room" style="display: none;">
+    <h2>Unirse a sala</h2>
+    <form onsubmit="joinRoom()" action="">
+      <input type="text" id="room-code" placeholder="Ingrese el código de la sala">
+      <input type="submit" value="Unirse a sala">
+   </form>
+  </div>
+  <div id="game-room" style="display: none;">
+    <h2>Código de sala: <span id="room-code-display"></span></h2>
+    <button onclick="spinBottle()" value="Iniciar"></button>
+
+<div id= "player-list"></div>
+
+  </div>
+  <div id="game-overlay" style="display: none;">
+    <div id="truth-or-dare">
+      <h3 id="question"></h3>
+      <button onclick="truth()">Verdad</button>
+      <button onclick="dare()">Reto</button>
+    </div>
+  </div>
+<script>
+  var truths = [];
+  var challenges = [];
+  var players = [];
+  var roomCode;
+  var currentPlayer;
+
+  function joinRoom() {
+    console.log("joinRoom function called");
+    // Show the join room form and hide the other elements
+    document.getElementById("join-room").style.display = "block";
+    document.getElementById("game").style.display = "none";
+    document.getElementById("create-room").style.display = "none";
+  }
+
+  function createRoom() {
+    // Show the create room form and hide the other elements
+    document.getElementById("create-room").style.display = "block";
+    document.getElementById("game").style.display = "none";
+    document.getElementById("join-room").style.display = "none";
+  }
+
+  function saveRoom() {
+    // Get the number of players and the questions and challenges from the form
+    var numPlayers = document.getElementById("players-number").value;
+    truths = document.getElementById("truths").value.split(".");
+    challenges = document.getElementById("challenges").value.split(".");
+    roomCode = generateRoomCode();
+    document.getElementById("room-code-display").innerHTML = roomCode;
+    // Show the game room and hide the create room form
+    document.getElementById("game-room").style.display = "block";
+    document.getElementById("create-room").style.display = "none";
+    // Add the players to the player list
+    for (var i = 0; i < numPlayers; i++) {
+      players.push("Jugador " + (i + 1));
+      document.getElementById("player-list").innerHTML += "Jugador " + (i + 1) + "<br>";
+    }
+  }
+
+  function spinBottle() {
+    // Spin the bottle and select a random player
+    currentPlayer = players[Math.floor(Math.random() * players.length)];
+    document.getElementById("question").innerHTML = currentPlayer + ", ¿verdad o reto?";
+    // Show the truth or dare overlay
+    document.getElementById("game-overlay").style.display = "block";
+  }
+
+  function truth() {
+    // Select a random truth from the truth array
+    var truth = truths[Math.floor(Math.random() * truths.length)];
+    document.getElementById("question").innerHTML = currentPlayer + ", " + truth;
+  }
+
+  function dare() {
+    // Select a random dare from the dare array
+    var dare = challenges[Math.floor(Math.random() * challenges.length)];
+    document.getElementById("question").innerHTML = currentPlayer + ", " + dare;
+  }
+
+  function generateRoomCode()
+
+{
+// Generate a random room code using letters and numbers
+var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+var code = "";
+for (var i = 0; i < 5; i++) {
+code += possible.charAt(Math.floor(Math.random() * possible.length));
+}
+return code;
+}
+// Fuction to check if room is full or not
+function joinRoom() {
+var enteredCode = document.getElementById("room-code").value;
+if (enteredCode === roomCode && players.length < 8 ) {
+alert("Successfully joined room");
+// Do something to add player to the room
+}
+else if(players.length >= 8 ){
+alert("Sala Llena")
+}else {
+alert("Invalid Room code");
+}
+}
+</script>
+
+</body>
+</html>
